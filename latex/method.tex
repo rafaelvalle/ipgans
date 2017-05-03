@@ -87,9 +87,26 @@ can be described as follows:
 \begin{equation}
     \gamma_2 = \frac{\int (r - \mu)^4 p(r) dr}{\sigma^4}
 \end{equation}
+
+Figure~\ref{fig:mnist_centroids} shows the spectral centroid computed
+on sample of MNIST training data.
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{mnist_centroids.png}
+  \caption{}
+  \label{fig:mnist_centroids}
+\end{figure}
+
 \subsubsection{Spectral Slope}
 Is computed by linear regression on the sepectral centroid with window of size
-7.
+7. Figure~\ref{fig:mnist_spectral_slope} shows these features computed on a
+sample of MNIST training data.
+
+\begin{figure}[!h]
+  \includegraphics[width=\linewidth]{mnist_spectral_slope.png}
+  \caption{}
+  \label{fig:mnist_spectral_slope}
+\end{figure}
 
 \subsubsection{Transition Matrix}
 Transition matrix is computed only for chromagram representations of piano
