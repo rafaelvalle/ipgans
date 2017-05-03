@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Related work}{}% 2
+\BOOKMARK [1][-]{section.3}{Method}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Hypotheses}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Learning properties}{section.3}% 5
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Summary Statistics}{subsection.3.2}% 6
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Spectral Moments}{subsection.3.2}% 7
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Spectral Slope}{subsection.3.2}% 8
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Transition Matrix}{subsection.3.2}% 9
+\BOOKMARK [2][-]{subsection.3.3}{Distance Measures}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.4}{Generative Adversarial Networks}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Experiments}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{MNIST}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.2}{Bach Chorales}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.3}{Speech}{section.4}% 15
+\BOOKMARK [1][-]{section.5}{Conclusions}{}% 16
