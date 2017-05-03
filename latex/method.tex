@@ -38,6 +38,14 @@ rise of adversarial attacks. We investigate if these differences can be used to
 detect if the data was generated with the GAN framework or is an adversarial
 attack.
 
+We call the reader's attention that approximating the distribution over features
+computed on the real data does not guarantee that the real data is being
+approximated. Formally speaking:
+Consider $X ~ Z$ and $f(X) ~ W$, where $f: X –> Y$.
+If $A ~ B$ and $B$ approximates $Z$, then $f(A) ~ D$ must also approximate $W$.
+However, a distribution that approximates $W$ is not guaranteed to approximate
+$Z$.
+
 \subsection{Learning properties}
 In this subsection, we describe the properties that we mine from data. They
 comprise of properties that are perceptually related with the image and
