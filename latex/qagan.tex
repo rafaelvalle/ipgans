@@ -20,11 +20,16 @@
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
-% my imports
+% set imports
 \usepackage{ntheorem}       % theorem writing
+\usepackage{cleveref}       % clever references
+\usepackage{graphicx}       % for images
+\usepackage[table,xcdraw]{xcolor} % for tables
+
+% set paths
+\graphicspath{{./figures/}}
 
 \title{Quantitative Analysis of GAN samples}
-
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
 % authors: \And and \AND.
@@ -67,14 +72,12 @@
 \maketitle
 
 \begin{abstract}
-    In this paper we quantitatively compare samples produced with adversarial
-    methods, specially Generative Adversarial Networks, and the real data
-    distribution. We show that one can produce a useful distance measure
-    between real and fake distributions by using the joint probability of 
-    marginalized perceptually significant features computed over the real and
-    fake data. We provide results on image, music and speech data and show 
-    that GAN generated samples have signatures that can be used to detect 
-    adversarial attacks.
+    In this paper we quantitatively evalute samples produced with adversarial
+    methods, specially Generative Adversarial Networks. We analyze summary
+    statistics of real and fake data and compute distances based on the 
+    marginal distribution of perceptually significant features. We provide results 
+    on image, music and speech data and show that GAN generated samples have 
+    signatures that can be used to detect adversarial attacks.
 \end{abstract}
 
 % setup theorems 
