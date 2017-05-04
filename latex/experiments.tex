@@ -25,12 +25,15 @@ produces better samples than the LSGAN. Below we compare the distribution of
 pixel intensities of several data to MNIST's training data. 
 Table~\ref{tbl:mnist_pixel} reveals that although the pixel intensities of LSGAN
 and IWGAN samples look similar to the training data, they are considerably
-different given the KS Two Sample Test but not so different given the JSD. This
+different given the KS Two Sample Test\footnote{Remember that the
+    test statistic is inversely proportial to $\sqrt{n}$}but not so different given the JSD. This
 can phaenomena can be understood by investigation of the empirical CDF of these
 samples in Figure~\ref{fig:mnist_pixel_ecdf}. The pixel values of the samples
 generated with the GAN framework are mainly bimodal but distributed around $-1$
-and $1$. This property is due to the tanh non-linearity and, naturally, will be
-present in any generator that includes this non-linearity on the last layer.
+and $1$.  Such behavior will be present in any gradient descent method using an
+asymptotically converging non-linearity, such as sigmoid and tanh, immediately 
+preceding the output of the generating function.
+
 
 \begin{table}[!h]
 \centering
@@ -66,12 +69,33 @@ mnist\_binomial    & 0.130855    & 0.0            & 0.0785009
 
 Although this confirms our hypothesis~\ref{hyp:visual} that there are properties
 that are hardly noticed with non-computational inspection, an adversary could
-easily apply thresholding to modify the distribution of pixel values of fake
-samples such that they are similar to the real data. For this reason, we compare the
-distributions of other features. Figure~\ref{fig:mnist_slope_distribution} shows
+easily apply thresholding to compensate for the asymptotically converging
+non-linearity such that the distribution of pixel values of fake
+samples become more similar to the real data.
+
+For this reason, we use the distributions over other features on the real and
+fake data. Figure~\ref{fig:mnist_slope_distribution} shows
 that if on the one hand the distribution of slopes of the test data is similar to the
 training data, on the other hand this distribution on generated samples differs
 considerably from the training data, thus confirming hypothesis~\ref{hyp:difference}.
+In table~\ref{tbl:mnist_slope} we show results of test statistics.
+
+\begin{table}[!h]
+\centering
+\caption{KS Two Sample Test and JSD over the distribution of mean slope for
+different samples}
+\label{tbl:mnist_slope}
+\begin{tabular}{l|ll|l|}
+                   & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}KS Two Sample Test} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}JSD} \\
+                   & Statistic   & P-Value    &            \\
+mnist\_train       & 0.0         & 1.0        & 0.0        \\
+mnist\_test        & 0.030699    & 0.000156   & 0.001872   \\
+mnist\_lsgan       & 0.317200    & 0.0        & 0.177692   \\
+mnist\_iwgan       & 0.478300    & 0.0        & 0.232894   \\
+mnist\_adversarial & 0.309099    & 0.0        & 0.022110   \\
+mnist\_binomial    & 0.293200    & 0.0        & 0.084448   
+\end{tabular}
+\end{table}
 
 \begin{figure}
   \includegraphics[width=\linewidth]{mnist_slope_distribution.png}
