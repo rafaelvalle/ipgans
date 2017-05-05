@@ -1,42 +1,34 @@
 In the past few years, several publications have investigated the use of the
 Generative Adversarial Networks framework for generation of samples and
-unsupervised feature learning. Following the ground-breaking GAN paper, some GAN
-papers, specially earlier papers, estimate the probability of a
-out-of-bag set under the distribution of the generator, $p_g$ by fitting a
-Gaussian parzen window\footnote{Kernel Density Estimation} to the samples generated 
-with G and reporting the log-likelihood under this distribution. It is know that
-this method has some drawbacks, including its high variance and bad performance
-in high dimensional spaces. 
+unsupervised feature learning. Following the practice started in paper and
+followed in Goodfellow et al ground-breaking GAN paper, earlier papers evaluate
+the quality of the generator by fitting a Gaussian Parzen window\footnote{Kernel
+Density Estimation} to the GAN samples and reporting the log-likelihood of the
+test set data under this distribution. It is know that this method has some drawbacks, 
+including its high variance and bad performance in high dimensional spaces. 
 
 In their brilliant publications, LSGAN, WGAN and IWGAN propose alternative
 objective functions and algorithms that circunvemt problems that are common when using the
-the Jenson-Shannon Divergence objective function described in the GAN paper, including instability of
-learning, mode collapse and meaningful learning curves. Although decrease in
-loss can be correlated with increase in image quality, as is show in the WGAN,
-there are cases where there is no correlation in loss and researchers rely on
-visual inspection of generated samples.
+original GAN objective, which minimizes the Jenson-Shannon Divergence. The problems 
+addressed include instability of learning, mode collapse and meaningful learning curves. 
 
-Although visual inspection can be useful, it can be extremelly
-cumbersome\footnote{I'll never train GANs again}, it does not provide a clear
+These alternatives do not eliminate the need of visual inspection of samples. 
+Although visual inspection can be emotionally pleasing, it can be extremelly cumbersome\footnote{I'll never train GANs again} and it does not provide a clear 
 description of the numerical properties of the generated samples, nor the
-variety of the generator's output. In BEGAN, the authors propose a solution to
+diversity of the generator's output. In BEGAN, the authors propose a solution to
 the diversity problem by introducing a new hyper-parameter $\gamma$ with a loss
 derived from the Wasserstein distance. Naturally, this new hyper-parameter does
-not target variety of a specific attribute of the images and the results in the
+not target the diverstiy of a specific attribute of the images and the results in the
 paper suggest that in their experiments $\gamma$ is also correlated with the variety
 of the color pallete.  
 
-Related to our paper, work by Deepak shows an interesting approach, where summary 
-statistics of the output label are used to both train the generator and evaluate its output. 
+Related to our paper, work by Deepak shows a very interesting approach, where summary 
+statistics of the output label are used to train the generator and evaluate its output. 
 In his paper, Deepak proposes a method that uses a novel loss function to
-optimize for any set of linear constraints on the output space of a CNN. We foresee that the
-combination of constrained neural networks with advancements provided by the 
-rapidly evolving field of image question answering will provide an important
-contribution for machine learning in general, including the evaluation of
-samples with the GAN framework. 
+optimize for any set of linear constraints on the output space of a CNN.
 In our paper, we draw inspiration from formal methods and specification mining.
 We approach such constraints as specifications that are mined from the
-real/training data. For example, one extract specifications from anatomy to
+real data. For example, one extract specifications from anatomy to
 evaluate or target sample generation with GANs. We use the learned specifications 
 to validate the output of the samples generated with the GAN framework on MNIST
-images, speech and music.
+images,estimate  speech and music.
