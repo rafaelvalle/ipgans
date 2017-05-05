@@ -1,48 +1,52 @@
 Since the first Generative Adversarial Networks paper in 2014, there have been
 many advances and publications related to the topic, including theoretical
 research on the framework, such as LSGAN, WGAN, Improved WGAN, Mixed GANs,
-Began, Energy Gans..., mainly applie to the domain of natural images, but slowly
-expanding to language models and music.
+Began, Energy Gans..., Although at the beginning GAN research was focused on
+natural images, it has been expanding to language models (ref iwgan) and music
+(ref midi gan and my paper). 
 
 Unlike variational auto encoders and other methods, most of the evaluation of the output
-of Generators trained with the GAN framework is still qualitative. For example,
-it is common for authors to subjectively say that their generated samples look
-better than others. In the early GAN papers, authors estimate the probability of
-the test set data under the generator by fitting a Gaussian parzen window to the
-samples generated with G and report the log-likelihood under this distribution,
-cite Breuleux et al.[8] GAN paper.  
+of Generators trained with the GAN framework is qualitative. When comparing to other GAN 
+methods, authors usually list generation of higher quality sample as one of 
+the advantages of their method. Interestingly, although decrease in
+loss can be correlated with increase in image quality, this is not always the
+case and authors still relly on visual inspection of generated images.
 
-In addition to evaluating sample quality manually, authors also mention in their
-papers that they have not observed mode collapse or that their framework
-prevents mode collapsing. Mixed GANs paper raises attention to this issue and
-questions the variety of the samples generated with the GAN framework.
+Based on visual inspection, authors confirm that they have not observed
+mode collapse or that their framework is robust to mode collapse if some
+criteria is meet. In practice, there is abundance of github issues where
+practicioners report mode collapse. Theoretically, this is dissonant with
+research evaluating mode collapse and variety in samples generated with the
+GAN framework.  
 
-One the challenges of evaluating GAN samples qualitatively is that it is hard to
-compute perceptually meaningful features from the images, e.g. there is no body
-part counting neuron. There has been a research trend, cite Deepak, that uses features
-computed over the training data, e.g. summary statistics, for training and
-evaluating generative models. We foresee this practice will develop in parallel
-with the advanvement of visual question answering.
+In the early GAN papers, authors used quantititave measures to evaluate GAN 
+samples but the methods used perform poorly in high dimensional spaces or have 
+high variance. Evaluating GAN samples quantitatively is hard because it depends
+on the existence of perceptually meaningful features. For example, consider the 
+generation of images of mamals: although it is possible to compute how far the
+color histogram of the fake samples are from the real samples, we do not yet
+have robust algorithms able to verify if an image follows specifications or 
+properties derived from anatomy. 
 
-This paper is related to this trend and quantitatively evaluates GAN generated
+Facing this challenge, there is a research trend that uses features computed over the 
+real samples, e.g. label statistics, for training and evaluating generative 
+models. This is a promissing field and we foresee that it will benefit
+considerably from developments in visual question answering.
+
+This paper is related to this research trend and quantitatively evaluates GAN generated
 samples by marginalizing perceptually meaningful features and computing the
-distance between the joint probability of these features in the real data and
-the fake data, i.e. the data sampled from the generator. The intuition is that
+distance between the distribution of these features in the real and
+the fake\footnote{Data sampled from the generator} data. The intuition is that
 as the number of distribution of features being compared increases, the more likely it is
 that the combination of these features is a meaningful representation of the true
 data. We offer the following contributions in this paper:
 
 \begin{itemize}
 \item We provide an alternative method to evaluate GAN samples manually
-\item We provide an alternative method to evaluate GAN samples that, unlike
-the Parzen window method, does not a distribution over the data
-\item We quantitatively evaluate GAN samples by comparing the marginal
-distribution of features between real and fake data
+\item We show that GAN samples have universal signatures 
+\item We show that GAN are note able to fully approximate simple distributions
+\item We show significant differences exist between the marginal distribution of features from
+    the real and fake data
 \item We compare the real distribution with adversarial data generated using the fast
 gradient sign method
-\item We show that GAN generated samples have a common signature that can be
-used to detect adversarial attacks
 \end{itemize}
-
-
-
