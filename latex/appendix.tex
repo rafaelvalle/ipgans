@@ -1,0 +1,40 @@
+
+% statistical moments equations
+\begin{equation}
+    \mu = \int rp(r) \partial r
+\end{equation}
+
+\begin{equation}
+    \sigma^2 = \int (r - \mu)^2 p(r) dr
+\end{equation}
+
+\begin{equation}
+    \gamma_1 = \frac{\int (r - \mu)^3 p(r) dr}{\sigma^3}
+\end{equation}
+
+\begin{equation}
+    \gamma_2 = \frac{\int (r - \mu)^4 p(r) dr}{\sigma^4}
+\end{equation}
+
+%MNIST implementation details 
+The discriminator and the generator follow the DCGAN architecture.
+The classifier used to generate the adversarial samples is a three layer fully
+conected network with dropout on every layer (25\%, 50\%, 50\%) and rectified
+linear units on the first and second layers. The $\epsilon$ parameter for the
+adversarial attack is set to $.25$(CHECK IF NOT $.1$).
+
+% chorales KS Two Sample test and JSD
+\begin{table}[!h]
+\centering
+\label{tbl:mnist_pixel}
+\begin{tabular}{l|ll|l|}
+                   & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}KS Two Sample Test} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}JSD} \\
+                      & Statistic   & P-Value        &                \\
+chorales\_train       & 0.0         & 1.0            & 0.0            \\
+chorales\_test        & 0.000175    & 0.999999       & 0.0000000      \\
+chorales\_iwgan       & 0.937779    & 0.0            & 0.0388592      \\
+chorales\_bernoulli   & 0.000049    & 0.999999       & 0.0785009      
+\end{tabular}
+\caption{KS Two Sample Test and JSD over the distribution of intensities for
+different samples}
+\end{table}

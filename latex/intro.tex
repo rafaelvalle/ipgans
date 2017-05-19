@@ -1,51 +1,42 @@
-Since the first Generative Adversarial Networks paper in 2014, GAN related
-papers use a grid of natural images to accompany theoretical and empirical
-results. Although at the beginning GAN research was focused on natural images, 
-it has been expanding to other domains including language models and music (ref iwgan) and music
-(ref midi gan and my paper). 
+Since the groundbreaking Generative Adversarial Networks
+paper~\cite{goodfellow2014generative} in 2014, GAN related
+publications use a grid of natural images to accompany theoretical and empirical
+results. Early GAN research focused on natural images and is expanding to other 
+domains including language models~\cite{gulrajani2017improved} and
+music~\cite{yang2017midigan}.  
 
-Unlike variational auto encoders and other methods, most of the evaluation of the output
-of Generators trained with the GAN framework is qualitative. When comparing to other GAN 
-methods, authors usually list generation of higher quality sample as one of 
-the advantages of their method. Interestingly, although decrease in
-loss can be correlated with increase in image quality, this is not always the
-case and authors still relly on visual inspection of generated images.
+Unlike variational auto encoders and other
+methods~\cite{goodfellow2014generative}, most of the evaluation of the output
+of Generators trained with the GAN framework is qualitative: authors normally 
+list higher sample quality as one of the advantages of their method over other
+methods.  Interestingly, unlike other optimization problems where analysis of
+the empirical risk is a strong indicator of progress, in GANs decrease in loss 
+is not always correlated with increase in image quality 
+~\cite{arjovsky2017wasserstein}, and thus authors still relly on visual 
+inspection of generated images.
 
 Based on visual inspection, authors confirm that they have not observed
 mode collapse or that their framework is robust to mode collapse if some
-criteria is meet. In practice, there is abundance of github issues where
-practicioners report mode collapse. Theoretically, this is dissonant with
-research evaluating mode collapse and variety in samples generated with the
-GAN framework.  
+criteria is met (\cite{arjovsky2017wasserstein},\cite{gulrajani2017improved}). 
+In practice, github issues where practicioners report mode collapse or
+not enough variety abound.
 
-In the early GAN papers, authors used quantititave measures to evaluate GAN 
-samples but the methods used perform poorly in high dimensional spaces or have 
-high variance. Evaluating GAN samples quantitatively is hard because it depends
-on the existence of perceptually meaningful features. For example, consider the 
-generation of images of mamals: although it is possible to compute how far the
-color histogram of the fake samples are from the real samples, we do not yet
-have robust algorithms able to verify if an image follows specifications or 
-properties derived from anatomy. 
+Verifiable Artificial Intelligence\cite{seshia2016vai}, more specifically
+verifying GAN samples is hard because it depends on the existence of
+perceptually meaningful features. Let's consider the generation of images
+of mamals: although it is possible to perform computation on color histograms,
+to compare fake and real samples, we do not yet have robust algorithms
+able to verify if an image follows specifications derived from anatomy. 
 
-Facing this challenge, there is a research trend that uses features computed over the 
-real samples, e.g. label statistics, for training and evaluating generative 
-models. This is a promissing field and we foresee that it will benefit
-considerably from developments in visual question answering.
-
-This paper is related to this research trend and quantitatively evaluates GAN generated
-samples by marginalizing perceptually meaningful features and computing the
-distance between the distribution of these features in the real and
-the fake\footnote{Data sampled from the generator} data. The intuition is that
-as the number of distribution of features being compared increases, the more likely it is
-that the combination of these features is a meaningful representation of the true
-data. We offer the following contributions in this paper:
-
+This paper is related to this effor and focuses on understanding how GAN
+generators approximate modes in the real distribution and verifying if the
+generated samples violate specifications derived from the real distribution. We
+quantitatively evaluate GAN generated samples by marginalizing perceptually
+meaningful features and computing the distance between the distribution of these 
+features in the real and the fake\footnote{Data sampled from the generator} data.  
+We analyze real and fake data and offer the following contributions in this paper: 
 \begin{itemize}
-\item We provide an alternative method to evaluate GAN samples manually
-\item We show that GAN samples have universal signatures 
-\item We show that GAN are note able to fully approximate simple distributions
-\item We show significant differences exist between the marginal distribution of features from
-    the real and fake data
-\item We compare the real distribution with adversarial data generated using the fast
-gradient sign method
+\item We show that GAN samples have universal signatures.
+\item We show how GAN samples approximate modes of the real distribution.
+\item We show significant differences between the marginal distribution of features. 
 \end{itemize}

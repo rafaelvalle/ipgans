@@ -24,12 +24,14 @@
 \usepackage{ntheorem}       % theorem writing
 \usepackage{cleveref}       % clever references
 \usepackage{graphicx}       % for images
+\usepackage{subcaption}        % images
 \usepackage[table,xcdraw]{xcolor} % for tables
+\usepackage{natbib}            % bibliography
 
 % set paths
 \graphicspath{{./figures/}}
 
-\title{Quantitative Analysis of GAN samples}
+\title{Interesting properties of GAN samples}
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
 % authors: \And and \AND.
@@ -72,12 +74,12 @@
 \maketitle
 
 \begin{abstract}
-    In this paper we quantitatively evalute samples produced with adversarial
-    methods, specially Generative Adversarial Networks. We analyze summary
+    In this paper we investigate numerical properties of samples produced 
+    with adversarial methods, specially Generative Adversarial Networks. We analyze summary
     statistics of real and fake data and compute distances based on the 
     marginal distribution of perceptually significant features. We provide results 
     on image, music and speech data and show that GAN generated samples have 
-    signatures that can be used to detect adversarial attacks.
+    interesting signatures that can be used to detect adversarial attacks.
 \end{abstract}
 
 % setup theorems 
@@ -90,6 +92,9 @@
 \section{Related work}\label{sec:related_work}
 \input{related_work}
 %
+\section{Hypotheses}\label{sec:hypotheses}
+\input{hypotheses}
+
 \section{Method}\label{sec:method}
 \input{method}
 %
@@ -104,6 +109,7 @@
 \input{acknowledgments}
 
 \section*{References}
-\bibliography{seq_gan}
+\bibliographystyle{plain}
+\bibliography{references}
 
 \end{document}

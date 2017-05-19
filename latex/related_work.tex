@@ -1,34 +1,44 @@
-In the past few years, several publications have investigated the use of the
-Generative Adversarial Networks framework for generation of samples and
-unsupervised feature learning. Following the practice started in paper and
-followed in Goodfellow et al ground-breaking GAN paper, earlier papers evaluate
+Despite its youth, several publications (\cite{arjovsky2017towards},\cite{salimans2016improved},
+\cite{zhao2016energy}, \cite{radford2015unsupervised}) have investigated the use of the
+GAN framework for generation of samples and unsupervised feature learning. 
+Following the procedure described in~\cite{breuleux2011quickly} and
+used in~\cite{goodfellow2014generative}, earlier GAN papers evaluate
 the quality of the generator by fitting a Gaussian Parzen window\footnote{Kernel
 Density Estimation} to the GAN samples and reporting the log-likelihood of the
-test set data under this distribution. It is know that this method has some drawbacks, 
+test set data under this distribution. It is known that this method has some drawbacks, 
 including its high variance and bad performance in high dimensional spaces. 
 
-In their brilliant publications, LSGAN, WGAN and IWGAN propose alternative
+In their brilliant publications, \cite{mao2016least},
+\cite{arjovsky2017wasserstein} and \cite{gulrajani2017improved} propose alternative
 objective functions and algorithms that circunvemt problems that are common when using the
-original GAN objective, which minimizes the Jenson-Shannon Divergence. The problems 
-addressed include instability of learning, mode collapse and meaningful learning curves. 
+original GAN objective. The problems addressed include instability of learning,
+mode collapse cand meaningful learning curves. 
 
-These alternatives do not eliminate the need of visual inspection of samples. 
-Although visual inspection can be emotionally pleasing, it can be extremelly cumbersome\footnote{I'll never train GANs again} and it does not provide a clear 
-description of the numerical properties of the generated samples, nor the
-diversity of the generator's output. In BEGAN, the authors propose a solution to
-the diversity problem by introducing a new hyper-parameter $\gamma$ with a loss
-derived from the Wasserstein distance. Naturally, this new hyper-parameter does
-not target the diverstiy of a specific attribute of the images and the results in the
-paper suggest that in their experiments $\gamma$ is also correlated with the variety
-of the color pallete.  
+These alternatives do not eliminate the need or excitement\footnote{Despite of
+authors promising on twitter to never touch GANs again.} 
+of visually inspecting GAN samples during training.
+In~\cite{berthelot2017began}, the authors propose a solution to the diversity
+problem by introducing a new hyper-parameter $\gamma$ with a loss derived from
+the Wasserstein distance. 
 
-Related to our paper, work by Deepak shows a very interesting approach, where summary 
-statistics of the output label are used to train the generator and evaluate its output. 
-In his paper, Deepak proposes a method that uses a novel loss function to
-optimize for any set of linear constraints on the output space of a CNN.
-In our paper, we draw inspiration from formal methods and specification mining.
-We approach such constraints as specifications that are mined from the
-real data. For example, one extract specifications from anatomy to
-evaluate or target sample generation with GANs. We use the learned specifications 
-to validate the output of the samples generated with the GAN framework on MNIST
-images,estimate  speech and music.
+%Naturally, this new hyper-parameter does not target the diverstiy of a specific 
+%attribute of the images and the results in the paper suggest that in their experiments 
+%$\gamma$ is also correlated with the variety of the color pallete.  
+%Theoretically, this is dissonant with research evaluating mode collapse and variety in samples generated with the
+%GAN framework.  
+
+%Related to constrained paper, work by Deepak shows a very interesting approach, where summary 
+%statistics of the output label are used to train the generator and evaluate its output. 
+%In his paper, Deepak proposes a method that uses a novel loss function to
+%optimize for any set of linear constraints on the output space of a CNN.
+%DESCRIBE IT MORE.
+
+%Our paper draws inspiration from formal methods and specification mining. 
+%We approach such constraints as specifications that are mined from features
+%computed over the real data. In addition to comparing the marginal distribution
+%of features from the real and fake data, we approach these distributions as
+%specifications that can be used to validate the output of GAN Samples. In this
+%paper we focus on image representations of numbers, speech and music, including MNIST images, 
+%mel spectrograms and piano rolls.
+
+In the next section we describe the hypotheses evaluated in this paper.

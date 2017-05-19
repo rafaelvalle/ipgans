@@ -1,0 +1,46 @@
+\begin{hyp}[H\ref{hyp:generate}] \label{hyp:generate}
+ Generative models can approximate the distribution of real data and hallucinate
+ fake data that has some variaety and resembles the real data
+\end{hyp}
+
+Although this hypothesis is trivial for experiments that have already been
+conducted, it is the first condition for our experiments with music and speech
+data. To our knowledge there are no publications where GANs are successful
+in hallucinating polyphonic music and speech data. During out experiments we prove that
+this hypothesis is true.
+
+\begin{hyp}[H\ref{hyp:features}] \label{hyp:features}
+The real data has useful properties that can be extracted computationally.
+\end{hyp}
+By useful we refer to properties that are closely related to the real data
+itself. For example, computing the distribution MNIST pixel values might be not
+useful for assessing drawing quality. However, it might be useful to evaluate
+if a random MNIST samples is real or fake data.
+
+\begin{hyp}[H\ref{hyp:visual}] \label{hyp:visual}
+The fake data has properties that are hardly noticed with non-computational inspection.
+\end{hyp}
+Visual inspection of generated samples has become the norm for the evaluation of
+samples generated using the GAN framework. We investigate if there are
+properties common to all GAN samples or properties that significantly differ
+between the real data and the fake data. 
+This hypothesis supports the next hypothesis related to adversarial attacks. 
+
+\begin{hyp}[H\ref{hyp:difference}] \label{hyp:difference}
+The difference in properties can be used to identify the source (real or fake)
+\end{hyp}
+The development of generative models for digital media announce the iminent
+rise of adversarial attacks. We investigate if these differences can be used to
+detect if the data was generated with the GAN framework or is an adversarial
+attack.
+
+We call the reader's attention that approximating the distribution over features
+computed on the real data does not guarantee that the real data is being
+approximated. Formally speaking:
+consider $X \sim Z$, i.e. X distributed as Z, and $f(X) \sim W$, where $f: X
+\mapsto Y$.
+If $A \sim B$ and $B$ approximates $Z$, then $f(A) \sim D$ must also approximate $W$.
+However, a distribution that approximates $W$ is not guaranteed to approximate
+$Z$.
+
+
