@@ -1,6 +1,7 @@
 In this section we describe our analysis method in detail, including
-briefly describing the datasets and features computed, as well as distance
-or divergence measures. \subsection{Datasets}
+briefly describing the datasets and features computed, as well as generative
+models.
+\subsection{Datasets}
 In our experiments we use the MNIST dataset, a MIDI dataset of 389 Bach Chorales downloaded from the web and a subsample of the NIST 2004 telefone
 conversational speech dataset with 100 speakers, multiple languages and
 on average of 5 minutes per speaker.
@@ -8,7 +9,7 @@ on average of 5 minutes per speaker.
 \subsection{Property extraction}
 The properties extracted from the datasets used on this paper can be
 perceptually meaningful or not. We claim that both properties can be used to numerically identify the source of the sample. In the context of this
-paper, samples are images of fixed size. Consider the single channel image $I$ with dimensions $R$ by $C$, where $I_{r, c}$ is the pixel intensity of the pixel at row $r$ and column $c$
+paper, samples are images of fixed size. 
 
 \subsubsection{Spectral Moments}
 The spectral centroid~\cite{peeters2004large} is a feature commonly used in the
@@ -17,12 +18,8 @@ can be applied to other domains and we invite the reader to visualize
 Figure~\ref{fig:centroids} for examples on MNIST and
 Mel-Spectrograms~\cite{peeters2004large}. For each column in an image, we 
 transform the pixel values into row probabilities by normalizing them by the
-column sum, after which we take the expected row value. 
-%Given one image column, we define $r$ as the pixel intensity at row $r$, and% 
-
-%\begin{equation}
-%    p(r) = \frac{r}{\sum_{r \in R}r}
-%\end{equation}
+column sum, after which we take the expected row value, thus obtaining the
+spectral centroid.
 
 Figure~\ref{fig:mnist_centroids} shows the spectral centroid computed
 on sample of MNIST training data.
@@ -45,8 +42,9 @@ on sample of MNIST training data.
 \end{figure}
 
 \subsubsection{Spectral Slope}
-The spectral slope is computed by applying linear regression using a overlapping
-sliding window of size 7. Figure~\ref{fig:slopes} shows these
+The spectral slope is computed by applying linear regression using an overlapping
+sliding window of size 7. For each window, we regress the spectral centroids on
+the column number \textit{mod} the window size. Figure~\ref{fig:slopes} shows these
 features computed on MNIST and Mel-Spectrograms. 
 
 \begin{figure}[!h]
