@@ -1,12 +1,13 @@
 \subsection{MNIST}
 We compare the distribution of features computed over the MNIST training set 
-to the distribution of the same features computed over other datasets, including
-the MNIST test set, samples generated with GAns and adversarial samples computed 
+to other datasets, including
+the MNIST test set, samples generated with GANs and adversarial samples computed 
 using the FGSM. The training data is
 scaled to $[0, 1]$ and the random baseline is sampled from a Bernouli distribution with 
 probability equal to the normalized mean value of pixel intentities in the
 MNIST training data, 0.13. Each GAN model is trained until the loss plateaus 
-and the generated samples look similar to the real samples.
+and the generated samples look similar to the real samples. Every dataset has
+10k samples.
 
 \begin{figure}[!h]
   \begin{center}
@@ -19,12 +20,12 @@ LSGAN, IWGAN, FSGM and bernoulli respectively.}
 
 Visual inspection of these 10 generated samples in
 Figure~\ref{fig:mnist_samples} show that IWGAN seems to produce better samples
-than LSGAN. Below we use the training set as a reference and compare the
+than LSGAN. We use the MNIST training set as a reference and compare the
 distribution of pixel intensities.  Table~\ref{tbl:mnist_pixel} reveals that
 although samples generated with LSGAN and IWGAN look similar to the training
-set, they are considerably different given the Kolgomorov-Smirnoff (KS) Two
-Sample Test and the Jenson Shannon-Divergence (JSD), specially if compared to
-the same statistics on the test data. 
+set, they are considerably different given the Kolgomorov-Smirnov (KS) Two
+Sample Test and the Jensen-Shannon Divergence (JSD), specially if compared to
+the same statistics on the MNIST test data. 
 
 \begin{table}[!h]
 \centering
@@ -38,12 +39,12 @@ mnist\_iwgan       & 0.701573    & 0.0       & 0.014662       \\
 mnist\_adversarial & 0.419338    & 0.0       & 0.581769       \\
 mnist\_bernoulli   & 0.130855    & 0.0       & 0.0785009      
 \end{tabular}
-\caption{KS Two Sample Test and JSD over the distribution of pixel values for
-different samples}
+\caption{Statistical comparisson over the distribution of pixel values for
+different samples using MNIST training set as reference.}
 \label{tbl:mnist_pixel}
 \end{table}
 
-This phaenomena can be understood by investigation of the empirical CDFs 
+This numerical phaenomena can be understood by investigaten the empirical CDFs 
 in Figure~\ref{fig:mnist_pixel_ecdf}. The pixel values of the samples
 generated with the GAN framework are mainly bimodal and asymptotically
 approaching the modes of the distribution, $0$ and $1$. Such behavior will be
@@ -60,28 +61,28 @@ the generating function.
 In addition, Figure~\ref{fig:mnist_pixel_distribution} shows that the GAN
 generated samples smoothly approximate the modes of the distribution. This
 smooth approximation is considerably different from the training and test sets.
-These properties could be used to identify the source of the data, hence
-confirming hypotheses \ref{hyp:features}, \ref{hyp:visual} and 
-\ref{hyp:difference}.
+Although these properties are not perceptually meaningful, they can be used to 
+identify the source of the data, hence confirming hypotheses \ref{hyp:features}, 
+\ref{hyp:visual} and \ref{hyp:difference}.
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{mnist_pixel_distribution.png}
   \caption{Histogram of pixel intensities for each dataset. First row shows
     histogram within the (0, 1) interval and 100 bins. Second row shows histogram
-    between the (0.11, and 0.88) interval and 100 bins. Note the smooth
-    curvature in GAN samples.}
+    between the (0.11, and 0.88) interval and 100 bins.}
   \label{fig:mnist_pixel_distribution}
 \end{figure}
 
 \subsection{Bach Chorales}
 We investigate the properties of Bach Chorales generated with the GAN framework
-and verify if they satisfy the musical specifications of Bach chorales.
+and verify if they satisfy musical specifications.
 Bach Chorales are polyphonic pieces of music, normally
 written for 4 or 5 voices, that follow a set of
-specifications/rules\footnote{specifications define the characteristics of the 
-style}. A global specification could enforce that durations be chosen from a set 
-of valid durations; a local specification could assert that only certain
-transitions between states (notes) are valid. 
+specifications/rules\footnote{The specifications define the characteristics of the 
+style.}. For example, a global specification could assert that only a set of
+durations can be used; a local specification could assert that only certain
+transitions between states (notes) are valid depending on the current harmony.
+
 For this experiment, we convert the dataset of Bach chorales to piano rolls. The
 piano roll is a representation in which the rows represent note numbers, the columns
 represent time steps and the cell values represent note intensities. We compare
@@ -89,8 +90,9 @@ the distribution of features computed over the training set, test set, gan
 generated samples and a random baseline sampled from a Bernouli distribution with 
 probability equal to the normalized mean value of intensities in the
 training data. After scaling, the intensities in the training and test data are
-strictly bimodal and equal to 1 or 0. Figure~\ref{fig:chorales_samples} below
-shows training, test, IWGAN and Bernoulli samples. 
+strictly bimodal and equal to $0$ or $1$. Figure~\ref{fig:chorales_samples} below
+shows training, test, IWGAN and Bernoulli samples, thus confirming
+hypothesis~\ref{hyp:generate}. Each dataset has roughly 1000 image patches.
 
 \begin{figure}[!h]
   \begin{center}
@@ -101,11 +103,11 @@ IWGAN, and Bernoulli respectively.}
   \end{center}
 \end{figure}
 
-Figure~\ref{fig:chorales_intensity_distribution} shows a behavior similar to our
-previous MNIST experiments: the IWGAN asymtoptically approximates the modes of
-the distribution of the distribution of intensity values. In the interest of
-space, we refer the reader to the appendix for statistics and other relevant
-information. 
+Figure~\ref{fig:chorales_intensity_distribution} shows a behavior that is
+similar to our previous MNIST experiments: the IWGAN asymtoptically approximates
+the modes of the distribution of the distribution of intensity values. In the 
+interest of space, we refer the reader to the appendix for statistics and other 
+relevant information. 
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{chorales_intensity_distribution.png}
@@ -113,16 +115,16 @@ information.
   \label{fig:chorales_intensity_distribution}
 \end{figure}
 
-Following, we investigate if the samples violate the specifications of
+Following, we investigate if the generated samples violate the specifications of
 Bach chorales. For doing so, we first convert the all data to boolean by 
-thresholding at 0.5 such that values above the threshold are set to 1. We then
-compute boolean Chroma~\cite{peeters2004large} features from the boolean piano
-rolls and compute a empirical transition matrix, where the positive
-entries represent existing transitions. The transition matrix built on the training
-data is taken as the reference specification, i.e. anything that is not included
-is a violation of the specification. Table~\ref{tbl:chroma_violations}
-shows the number of violations given each dataset. Compared to the test sample
-that has only 429 violations, the improved WGAN samples has over 5000
+thresholding at 0.5 such that values above the threshold are set to 1. We use
+these piano rolls to compute boolean Chroma~\cite{peeters2004large} feature and
+to compute an Chroma empirical transition matrix, where the positive
+entries represent existing and valid transitions. The transition matrix built on 
+the training data is taken as the reference specification, i.e. anything that is 
+not included is a violation of the specification. Table~\ref{tbl:chroma_violations}
+shows the number of violations given each dataset. Compared to the test set 
+that has only 429 violations, the IWGAN samples have over 5000
 violations, 10 times more than the test set! We use these facts to confirm
 hypotheses \ref{hyp:features}, \ref{hyp:visual} and \ref{hyp:difference}.
 
@@ -174,16 +176,21 @@ comparisson between datasets.
 \subsection{Speech}
 Within the speech domain, we investigate dynamic compressed Mel-Spectrogram 
 samples produced with GANs trained on a subset of the NIST 2004 dataset, with
-100 speakers. The generated samples can be seen in
+100 speakers. We divide the NIST 2004 dataset into training and test set,
+generate samples with the GAN framework and use a random baseline sampled from 
+a Exponential distribution with parameters chosen using heuristics.
+The generated samples can be seen in
 Figure~\ref{fig:speech_samples}, thus confirming hypothesis~\ref{hyp:generate}.
-We obtain the Mel-Spectrogram is obtained by projecting a
-spectrogram onto a mel scale, which we do by using the python library
-librosa~\cite{mcfee2015librosa} to project the spectrogram onto 64 mel bands,
+We obtain the Mel-Spectrogram by projecting a
+spectrogram onto a mel scale, which we do with the python library
+librosa~\cite{mcfee2015librosa}. More specifically,  we project the spectrogram 
+onto 64 mel bands,
 with window size equal to 1024 samples and hop size equal to 160 samples, i.e.
 frames of 100ms long. Dynamic range compression is computed as described 
 in~\cite{lukic2016speaker}, with $log(1 + C*M)$, where $C$ is the compression 
 constant scalar set to $1000$ and $M$ is the matrix representing the Mel-Spectrogram.
-The GAN models are trained using DCGAN with the improved Wasserstein GAN.
+Each dataset has approximately 1000 image pataches and the GAN models are trained 
+using DCGAN with the improved Wasserstein GAN algorithm.
 
 \begin{figure}[!h]
   \begin{center}
@@ -226,7 +233,7 @@ differences and confirm hypotheses \ref{hyp:features} and \ref{hyp:visual}.
         \label{tbl:speech_intensity}
     %\end{table}
     \end{subfigure}
-    \caption{empirical CDF and statistical tests of speech intensity}
+    \caption{Empirical CDF and statistical tests of speech intensity}
     \label{fig:speech_intensity}
 \end{figure}
 
@@ -255,14 +262,15 @@ the real distribution of these features.
 Figure~\ref{fig:speech_spectral_stats} shows statistics used to compare the
 reference (training data) and other datasets. The difference between
 KS-Statistics and JSD of the test data and generated samples are negligible.
-Interestingly, the spectral slope p-values of the improved WGAN are considerably
+Interestingly, the p-values of the spectral slope of the improved WGAN are considerably
 higher than the test data. For these reasons and although 
 Table~\ref{tbl:speech_intensity} shows a significant difference between the 
 KS-Statistic of test data and generated data with respect to the training
 data, we refrain from confirming hypothesis \ref{hyp:difference}). An adversary
-can easily manipulate the generated data to considerably decrease the different
-in this difference and keeping the high similarity in features higher to
-simulate such moments of spectral centroid or slope. 
+can easily manipulate the generated data to considerably decrease 
+this difference and still keeping the high similarity in features harder to
+simulate such as moments of spectral centroid or slope. 
+
 \begin{figure}[!h]
     \centering
     \begin{subfigure}[b]{.45\textwidth}
