@@ -1,42 +1,31 @@
 Since the groundbreaking Generative Adversarial Networks
 paper~\cite{goodfellow2014generative} in 2014, GAN related
-publications use a grid of natural images to accompany theoretical and empirical
-results. Early GAN research focused on natural images and is expanding to other 
-domains including language models~\cite{gulrajani2017improved} and
-music~\cite{yang2017midigan}.  
+publications use a grid of image samples to accompany theoretical and empirical
+results. GAN research focuses is expanding to other domains including language 
+models~\cite{gulrajani2017improved} and music~\cite{yang2017midigan}, requiring
+new methods of sample inspection.
 
 Unlike variational auto encoders and other
-methods~\cite{goodfellow2014generative}, most of the evaluation of the output
+models~\cite{goodfellow2014generative}, most of the evaluation of the output
 of Generators trained with the GAN framework is qualitative: authors normally 
 list higher sample quality as one of the advantages of their method over other
-methods.  Interestingly, unlike other optimization problems where analysis of
-the empirical risk is a strong indicator of progress, in GANs decrease in loss 
-is not always correlated with increase in image quality 
-~\cite{arjovsky2017wasserstein}, and thus authors still relly on visual 
-inspection of generated images.
+methods.  Interestingly, little is mentioned about the numerical properties of
+GAN samples and how these properties compare to real samples.
 
-Based on visual inspection, authors confirm that they have not observed
-mode collapse or that their framework is robust to mode collapse if some
-criteria is met (\cite{arjovsky2017wasserstein},\cite{gulrajani2017improved}). 
-In practice, github issues where practicioners report mode collapse or
-not enough variety abound.
+In the context of verifiable Artificial Intelligence\cite{seshia2016vai}, 
+it is hard to systematically verify the Generator because verification depends 
+on the existence of perceptually meaningful features. For example, consider the 
+generation of images of mamals: although it is possible to compare color histograms 
+of fake\footnote{Generated samples} and real samples, we do not yet have robust 
+algorithms able to verify if an image follows specifications derived from anatomy. 
 
-Verifiable Artificial Intelligence\cite{seshia2016vai}, more specifically
-verifying GAN samples is hard because it depends on the existence of
-perceptually meaningful features. Let's consider the generation of images
-of mamals: although it is possible to perform computation on color histograms,
-to compare fake and real samples, we do not yet have robust algorithms
-able to verify if an image follows specifications derived from anatomy. 
-
-This paper is related to this effor and focuses on understanding how GAN
-generators approximate modes in the real distribution and verifying if the
-generated samples violate specifications derived from the real distribution. We
-quantitatively evaluate GAN generated samples by marginalizing perceptually
-meaningful features and computing the distance between the distribution of these 
-features in the real and the fake\footnote{Data sampled from the generator} data.  
-We analyze real and fake data and offer the following contributions in this paper: 
+This paper is related to this effort and focuses on understanding the numerical 
+properties of GAN samples. We investigate how the Generator approximate modes 
+in the real distribution and verify if the generated samples violate specifications 
+derived from the real distribution. We offer the following contributions in this paper: 
 \begin{itemize}
 \item We show that GAN samples have universal signatures.
 \item We show how GAN samples approximate modes of the real distribution.
 \item We show significant differences between the marginal distribution of features. 
+\item We show GAN samples that violate specifications in the real data.
 \end{itemize}
