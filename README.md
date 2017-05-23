@@ -1,2 +1,2 @@
-# qagan
-Quantitative Analysis of GAN samples
+# IPGANs
+Interesting Properties of GAN samples
