@@ -2,12 +2,12 @@
 We compare the distribution of features computed over the MNIST training set 
 to other datasets, including
 the MNIST test set, samples generated with GANs and adversarial samples computed 
-using the FGSM. The training data is
+using FGSM. The training data is
 scaled to $[0, 1]$ and the random baseline is sampled from a Bernouli distribution with 
-probability equal to the normalized mean value of pixel intentities in the
+probability equal to the value of pixel intensities in the
 MNIST training data, 0.13. Each GAN model is trained until the loss plateaus 
-and the generated samples look similar to the real samples. Every dataset has
-10k samples.
+and the generated samples look similar to the real samples. The datasets
+compared have 10 thousand samples each.
 
 \begin{figure}[!h]
   \begin{center}
@@ -18,12 +18,12 @@ LSGAN, IWGAN, FSGM and bernoulli respectively.}
   \end{center}
 \end{figure}
 
-Visual inspection of these 10 generated samples in
+Visual inspection of the generated samples in
 Figure~\ref{fig:mnist_samples} show that IWGAN seems to produce better samples
-than LSGAN. We use the MNIST training set as a reference and compare the
+than LSGAN. Quantitatively, we use the MNIST training set as a reference and compare the
 distribution of pixel intensities.  Table~\ref{tbl:mnist_pixel} reveals that
 although samples generated with LSGAN and IWGAN look similar to the training
-set, they are considerably different given the Kolgomorov-Smirnov (KS) Two
+set, they are considerably different from the training set given the Kolgomorov-Smirnov (KS) Two
 Sample Test and the Jensen-Shannon Divergence (JSD), specially if compared to
 the same statistics on the MNIST test data. 
 
@@ -44,17 +44,17 @@ different samples using MNIST training set as reference.}
 \label{tbl:mnist_pixel}
 \end{table}
 
-This numerical phaenomena can be understood by investigaten the empirical CDFs 
+These numerical phaenomena can be understood by investigating the empirical CDFs 
 in Figure~\ref{fig:mnist_pixel_ecdf}. The pixel values of the samples
 generated with the GAN framework are mainly bimodal and asymptotically
-approaching the modes of the distribution, $0$ and $1$. Such behavior will be
-present in any gradient descent method using an asymptotically converging 
-non-linearity, such as sigmoid and tanh, immediately preceding the output of 
-the generating function.
+approach the modes of the distribution of pixel values in the real data, $0$ and $1$. Such behavior will be
+present in any Generator trained using gradient descent and an asymptotically converging 
+non-linearity, such as sigmoid and tanh, at the poutput of the generating function.
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{mnist_pixel_ecdf.png}
-    \caption{Pixel empirical CDF of training data as reference in green and other datasets}
+    \caption{Pixel empirical CDF of training data as reference (green) and other
+    datasets(red)}
   \label{fig:mnist_pixel_ecdf}
 \end{figure}
 
@@ -68,25 +68,25 @@ identify the source of the data, hence confirming hypotheses \ref{hyp:features},
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{mnist_pixel_distribution.png}
   \caption{Histogram of pixel intensities for each dataset. First row shows
-    histogram within the (0, 1) interval and 100 bins. Second row shows histogram
-    between the (0.11, and 0.88) interval and 100 bins.}
+    histogram within the [0, 1] interval and 100 bins. Second row shows
+    histograms between the [0.11, and 0.88] interval and 100 bins.}
   \label{fig:mnist_pixel_distribution}
 \end{figure}
 
 \subsection{Bach Chorales}
-We investigate the properties of Bach Chorales generated with the GAN framework
+We investigate the properties of Bach chorales generated with the GAN framework
 and verify if they satisfy musical specifications.
-Bach Chorales are polyphonic pieces of music, normally
+Bach chorales are polyphonic pieces of music, normally
 written for 4 or 5 voices, that follow a set of
 specifications/rules\footnote{The specifications define the characteristics of the 
-style.}. For example, a global specification could assert that only a set of
-durations can be used; a local specification could assert that only certain
+musical style.}. For example, a global specification could assert that only a set of
+durations are valid; a local specification could assert that only certain
 transitions between states (notes) are valid depending on the current harmony.
 
 For this experiment, we convert the dataset of Bach chorales to piano rolls. The
 piano roll is a representation in which the rows represent note numbers, the columns
 represent time steps and the cell values represent note intensities. We compare
-the distribution of features computed over the training set, test set, gan
+the distribution of features computed over the training set, test set, GAN
 generated samples and a random baseline sampled from a Bernouli distribution with 
 probability equal to the normalized mean value of intensities in the
 training data. After scaling, the intensities in the training and test data are
@@ -105,9 +105,9 @@ IWGAN, and Bernoulli respectively.}
 
 Figure~\ref{fig:chorales_intensity_distribution} shows a behavior that is
 similar to our previous MNIST experiments: the IWGAN asymtoptically approximates
-the modes of the distribution of the distribution of intensity values. In the 
-interest of space, we refer the reader to the appendix for statistics and other 
-relevant information. 
+the modes of the distribution of intensity values. In the 
+interest of space, we refer the reader to the online appendix\footnote{Not
+provided to preserve anonymity} for statistics and other relevant information. 
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{chorales_intensity_distribution.png}
@@ -116,15 +116,17 @@ relevant information.
 \end{figure}
 
 Following, we investigate if the generated samples violate the specifications of
-Bach chorales. For doing so, we first convert the all data to boolean by 
-thresholding at 0.5 such that values above the threshold are set to 1. We use
+Bach chorales. For doing so, we first convert all datasets to boolean by 
+thresholding at 0.5 such that values above the threshold are set to 1 or 0
+otherwise. We use
 these piano rolls to compute boolean Chroma~\cite{peeters2004large} feature and
-to compute an Chroma empirical transition matrix, where the positive
+to compute an empirica Chroma transition matrix, where the positive
 entries represent existing and valid transitions. The transition matrix built on 
 the training data is taken as the reference specification, i.e. anything that is 
 not included is a violation of the specification. Table~\ref{tbl:chroma_violations}
-shows the number of violations given each dataset. Compared to the test set 
-that has only 429 violations, the IWGAN samples have over 5000
+shows the number of violations given each dataset. Although
+Figure~\ref{fig:chorales_samples} shows generated samples that look similar to
+the real data, the IWGAN samples have over 5000
 violations, 10 times more than the test set! We use these facts to confirm
 hypotheses \ref{hyp:features}, \ref{hyp:visual} and \ref{hyp:difference}.
 
@@ -134,7 +136,7 @@ hypotheses \ref{hyp:features}, \ref{hyp:visual} and \ref{hyp:difference}.
 & \cellcolor[HTML]{C0C0C0}bach\_train & \cellcolor[HTML]{C0C0C0}bach\_test & \cellcolor[HTML]{C0C0C0}bach\_iwgan & \cellcolor[HTML]{C0C0C0}bach\_bernoulli \\ \cline{2-5} 
 \multicolumn{1}{l|}{\cellcolor[HTML]{C0C0C0}Number of Violations} & 0                                   & 429                                & 5029                                & 58284                                  
 \end{tabular}
-\caption{Number of specification violation with respect to training data as
+\caption{Number of specification violations with training data as
     reference.}
 \label{tbl:chroma_violations}
 \end{table}
@@ -151,7 +153,7 @@ comparisson between datasets.
 \begin{figure}[!h]
     \begin{subfigure}[b]{0.65\textwidth}
         \includegraphics[width=\linewidth]{chorales_duration_distribution.png}
-        \caption{Duration distribution}
+        \caption{Histogram of note durations}
         \label{fig:chorales_duration_distribution}
     \end{subfigure}
     \quad
@@ -206,7 +208,7 @@ values. Unlike our previous experiments where intensity (Bach Chorales)
 or pixel value (MNIST) was linear, in this experiment intensities are compressed using the
 log function. This considerably reduces the distance between the empirical CDFs
 of the training data and GAN samples,
-specially around the saturating points of the non-linearity, $-1$ and $1$ in this
+specially around the saturating points of the tanh non-linearity, $-1$ and $1$ in this
 case. In Table~\ref{tbl:speech_intensity} we show numerical analysis of the
 differences and confirm hypotheses \ref{hyp:features} and \ref{hyp:visual}.
 \begin{figure}[!h]
@@ -237,7 +239,7 @@ differences and confirm hypotheses \ref{hyp:features} and \ref{hyp:visual}.
     \label{fig:speech_intensity}
 \end{figure}
 
-Figure~\ref{fig:speech_moments} shows the distribution of moments computed on
+Figure~\ref{fig:speech_moments} shows the distribution of statistical moments computed on
 spectral centroids and slope. The distributions from different sources
 considerably overlap, indicating that the generator has efficiently approximated
 the real distribution of these features.
@@ -266,9 +268,9 @@ Interestingly, the p-values of the spectral slope of the improved WGAN are consi
 higher than the test data. For these reasons and although 
 Table~\ref{tbl:speech_intensity} shows a significant difference between the 
 KS-Statistic of test data and generated data with respect to the training
-data, we refrain from confirming hypothesis \ref{hyp:difference}). An adversary
+data, we refrain from confirming hypothesis \ref{hyp:difference}. An adversary
 can easily manipulate the generated data to considerably decrease 
-this difference and still keeping the high similarity in features harder to
+this difference and still keep the high similarity in features harder to
 simulate such as moments of spectral centroid or slope. 
 
 \begin{figure}[!h]

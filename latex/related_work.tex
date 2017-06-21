@@ -3,17 +3,16 @@ Despite its youth, several publications (\cite{arjovsky2017towards},
 \cite{radford2015unsupervised}) have investigated the use of the
 GAN framework for generation of samples and unsupervised feature learning. 
 Following the procedure described in~\cite{breuleux2011quickly} and
-used in~\cite{goodfellow2014generative}, earlier GAN papers evaluate
+used in~\cite{goodfellow2014generative}, earlier GAN papers evaluated
 the quality of the Generator by fitting a Gaussian Parzen window\footnote{Kernel
 Density Estimation} to the GAN samples and reporting the log-likelihood of the
 test set under this distribution. It is known that this method has some drawbacks, 
 including its high variance and bad performance in high dimensional
 spaces~\cite{goodfellow2014generative}.
 
-Unlike other optimization problems where analysis of
-the empirical risk is a strong indicator of progress, in GANs decrease in loss 
-is not always correlated with increase in image quality 
-~\cite{arjovsky2017wasserstein}, and thus authors still relly on visual 
+Unlike other optimization problems, where analysis of
+the empirical risk is a strong indicator of progress, in GANs the decrease in loss 
+is not always correlated with increase in image quality~\cite{arjovsky2017wasserstein}, and thus authors still relly on visual 
 inspection of generated images. Based on visual inspection, authors confirm that
 they have not observed mode collapse or that their framework is robust to mode
 collapse if some criteria is met (\cite{arjovsky2017wasserstein}, 
@@ -24,17 +23,17 @@ variety abound.
 In their brilliant publications, \cite{mao2016least},
 \cite{arjovsky2017wasserstein} and \cite{gulrajani2017improved} propose alternative
 objective functions and algorithms that circunvemt problems that are common when using the
-original GAN objective. The problems addressed include instability of learning,
-mode collapse cand meaningful learning curves~\cite{salimans2016improved}.
+original GAN objective described in~\cite{goodfellow2014generative}. The problems addressed include instability of learning,
+mode collapse and meaningful loss curves~\cite{salimans2016improved}.
 
 These alternatives do not eliminate the need or excitement\footnote{Despite of
-authors promising on twitter to never touch GANs again.} 
+authors promising on twitter to never train GANs again.} 
 of visually inspecting GAN samples during training, nor do they provide
-numerical information about the generated samples. In the following sections, we
-will reveal some interesting properties of GAN samples. 
+quantitative information about the generated samples. In the following sections, we
+will analyze GAN samples and reveal some interesting properties therein. 
 In addition to comparing the marginal distribution
-of features from the real and fake data, we approach these distributions as
-specifications that can be used to validate the output of GAN Samples. 
+of features from the real and fake data, we approach these distributions from
+the real data as specifications that can be used to validate the output of GAN Samples. 
 We start by enumerating the hypotheses evaluated in this paper.
 
 %In~\cite{berthelot2017began}, the authors propose a solution to the diversity
@@ -60,5 +59,3 @@ We start by enumerating the hypotheses evaluated in this paper.
 %specifications that can be used to validate the output of GAN Samples. In this
 %paper we focus on image representations of numbers, speech and music, including MNIST images, 
 %mel spectrograms and piano rolls.
-
-In the next section we describe the hypotheses evaluated in this paper.
