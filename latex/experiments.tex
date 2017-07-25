@@ -3,7 +3,7 @@ We compare the distribution of features computed over the MNIST training set
 to other datasets, including
 the MNIST test set, samples generated with GANs and adversarial samples computed 
 using FGSM. The training data is
-scaled to $[0, 1]$ and the random baseline is sampled from a Bernouli distribution with 
+scaled to $[0, 1]$ and the random baseline is sampled from a Bernoulli distribution with 
 probability equal to the value of pixel intensities in the
 MNIST training data, 0.13. Each GAN model is trained until the loss plateaus 
 and the generated samples look similar to the real samples. The datasets
@@ -13,7 +13,7 @@ compared have 10 thousand samples each.
   \begin{center}
   \includegraphics[width=0.8\linewidth]{mnist_samples.png}
   \caption{Samples drawn from MNIST train, test,
-LSGAN, IWGAN, FSGM and bernoulli respectively.}
+LSGAN, IWGAN, FSGM and Bernoulli respectively.}
   \label{fig:mnist_samples}
   \end{center}
 \end{figure}
@@ -39,17 +39,17 @@ mnist\_iwgan       & 0.701573    & 0.0       & 0.014662       \\
 mnist\_adversarial & 0.419338    & 0.0       & 0.581769       \\
 mnist\_bernoulli   & 0.130855    & 0.0       & 0.0785009      
 \end{tabular}
-\caption{Statistical comparisson over the distribution of pixel values for
+\caption{Statistical comparison over the distribution of pixel values for
 different samples using MNIST training set as reference.}
 \label{tbl:mnist_pixel}
 \end{table}
 
-These numerical phaenomena can be understood by investigating the empirical CDFs 
+These numerical phenomena can be understood by investigating the empirical CDFs 
 in Figure~\ref{fig:mnist_pixel_ecdf}. The pixel values of the samples
-generated with the GAN framework are mainly bimodal and asymptotically
+generated with the GAN framework are mainly bi-modal and asymptotically
 approach the modes of the distribution of pixel values in the real data, $0$ and $1$. Such behavior will be
 present in any Generator trained using gradient descent and an asymptotically converging 
-non-linearity, such as sigmoid and tanh, at the poutput of the generating function.
+non-linearity, such as sigmoid and tanh, at the output of the generating function.
 
 \begin{figure}[!h]
   \includegraphics[width=\linewidth]{mnist_pixel_ecdf.png}
@@ -87,10 +87,10 @@ For this experiment, we convert the dataset of Bach chorales to piano rolls. The
 piano roll is a representation in which the rows represent note numbers, the columns
 represent time steps and the cell values represent note intensities. We compare
 the distribution of features computed over the training set, test set, GAN
-generated samples and a random baseline sampled from a Bernouli distribution with 
+generated samples and a random baseline sampled from a Bernoulli distribution with 
 probability equal to the normalized mean value of intensities in the
 training data. After scaling, the intensities in the training and test data are
-strictly bimodal and equal to $0$ or $1$. Figure~\ref{fig:chorales_samples} below
+strictly bi-modal and equal to $0$ or $1$. Figure~\ref{fig:chorales_samples} below
 shows training, test, IWGAN and Bernoulli samples, thus confirming
 hypothesis~\ref{hyp:generate}. Each dataset has roughly 1000 image patches.
 
@@ -104,7 +104,7 @@ IWGAN, and Bernoulli respectively.}
 \end{figure}
 
 Figure~\ref{fig:chorales_intensity_distribution} shows a behavior that is
-similar to our previous MNIST experiments: the IWGAN asymtoptically approximates
+similar to our previous MNIST experiments: the IWGAN asymptotically approximates
 the modes of the distribution of intensity values. In the 
 interest of space, we refer the reader to the online appendix\footnote{Not
 provided to preserve anonymity} for statistics and other relevant information. 
@@ -120,7 +120,7 @@ Bach chorales. For doing so, we first convert all datasets to boolean by
 thresholding at 0.5 such that values above the threshold are set to 1 or 0
 otherwise. We use
 these piano rolls to compute boolean Chroma~\cite{peeters2004large} feature and
-to compute an empirica Chroma transition matrix, where the positive
+to compute an empirical Chroma transition matrix, where the positive
 entries represent existing and valid transitions. The transition matrix built on 
 the training data is taken as the reference specification, i.e. anything that is 
 not included is a violation of the specification. Table~\ref{tbl:chroma_violations}
@@ -144,10 +144,10 @@ hypotheses \ref{hyp:features}, \ref{hyp:visual} and \ref{hyp:difference}.
 In addition to experiments with Chroma features, we computed the distribution of
 note durations on the boolean piano roll described above.
 Figure~\ref{fig:chorales_duration_distribution} shows the distribution of
-note durations within each dataset. The train and test data are approximatelly
-bimodal and, again, the improved WGAN smoothly approximates the
+note durations within each dataset. The train and test data are approximately
+bi-modal and, again, the improved WGAN smoothly approximates the
 dominating modes of the distribution. Table~\ref{tbl:duration} provides a numerical 
-comparisson between datasets.
+comparison between datasets.
 
 
 \begin{figure}[!h]
@@ -191,7 +191,7 @@ with window size equal to 1024 samples and hop size equal to 160 samples, i.e.
 frames of 100ms long. Dynamic range compression is computed as described 
 in~\cite{lukic2016speaker}, with $log(1 + C*M)$, where $C$ is the compression 
 constant scalar set to $1000$ and $M$ is the matrix representing the Mel-Spectrogram.
-Each dataset has approximately 1000 image pataches and the GAN models are trained 
+Each dataset has approximately 1000 image patches and the GAN models are trained 
 using DCGAN with the improved Wasserstein GAN algorithm.
 
 \begin{figure}[!h]
