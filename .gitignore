@@ -3,3 +3,4 @@
 *.jpg
 *.npz
 *.gz
+.ropeproject*
