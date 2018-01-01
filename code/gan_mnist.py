@@ -379,9 +379,9 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
 
     # Optionally, you could now dump the network weights to a file like this:
     if dump:
-        np.savez('{}_mnist_gen.npz'.format(gan),
+        np.savez('models/{}_mnist_gen.npz'.format(gan),
                  *lasagne.layers.get_all_param_values(generator))
-        np.savez('{}_mnist_crit.npz'.format(gan),
+        np.savez('models/{}_mnist_crit.npz'.format(gan),
                  *lasagne.layers.get_all_param_values(critic))
 
 
