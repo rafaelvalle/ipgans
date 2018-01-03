@@ -186,6 +186,10 @@ def get_critic_runs(gan, generator_updates):
     if gan in ('dcgan', 'lsgan'):
         return 1
 
+    # In each epoch, we do `epochsize` generator updates. Usually, the
+    # critic is updated 5 times before every generator update. For the
+    # first 25 generator updates and every 500 generator updates, the
+    # critic is updated 100 times instead, following the authors' code.
     if (generator_updates < 25) or (generator_updates % 500 == 0):
         return 100
     else:
@@ -266,9 +270,11 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
     # Create loss expressions
     if gan == 'dcgan':
         # Create loss expressions
-        generator_loss = lasagne.objectives.binary_crossentropy(fake_out, 1).mean()
+        generator_loss = lasagne.objectives.binary_crossentropy(fake_out, 1)
+        generator_loss = generator_loss.mean()
         critic_loss = (lasagne.objectives.binary_crossentropy(real_out, 1) +
-                       lasagne.objectives.binary_crossentropy(fake_out, 0)).mean()
+                       lasagne.objectives.binary_crossentropy(fake_out, 0))
+        critic_loss = critic_loss.mean()
     elif gan == 'lsgan':
         # a, b, c = -1, 1, 0  # Equation (8) in the paper
         a, b, c = 0, 1, 1  # Equation (9) in the paper
@@ -341,24 +347,19 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
 
     # We iterate over epochs:
     n_generator_updates = 0
-    for epoch in range(n_epochs):
-        start_time = time.time()
-
+    for epoch in tqdm(range(n_epochs)):
         # sample a batch of samples, plot them inc. histograms
         n_samples = 1000
         samples = gen_fn(lasagne.utils.floatX(np.random.rand(n_samples, 100)))
-        plot_samples(gan, samples, "{}_{}_samples.png".format(prefix, suffix))
+        plot_samples(gan, samples, "samples/{}_samples_{}_{}.png".format(
+            prefix, epoch, suffix))
         plot_histogram(
-            gan, samples, X_train, "{} : {}".format(gan, optimizer),
+            gan, samples, X_train, "{} : {} {}".format(gan, optimizer, epoch),
             "histograms/{}_hist_epoch_{}_{}.png".format(prefix, epoch, suffix))
 
-        # In each epoch, we do `epochsize` generator updates. Usually, the
-        # critic is updated 5 times before every generator update. For the
-        # first 25 generator updates and every 500 generator updates, the
-        # critic is updated 100 times instead, following the authors' code.
         critic_scores = []
         generator_scores = []
-        for _ in tqdm(range(epoch_size)):
+        for _ in range(epoch_size):
             for _ in range(get_critic_runs(gan, n_generator_updates)):
                 batch = next(batches)
                 inputs, targets = batch
@@ -366,18 +367,15 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
             generator_scores.append(generator_train_fn())
             n_generator_updates += 1
 
-        # Then we print the results for this epoch:
-        print("Epoch {} of {} took {:.3f}s".format(
-            epoch + 1, n_epochs, time.time() - start_time))
         print("  generator loss:\t\t{}".format(np.mean(generator_scores)))
         print("  critic loss:\t\t{}".format(np.mean(critic_scores)))
 
         # After half the epochs, we start decaying the learn rate towards zero
-        if eta_decay and epoch >= n_epochs // 2:
+        if eta_decay and epoch >= int(n_epochs / 2):
             progress = float(epoch) / n_epochs
             eta.set_value(lasagne.utils.floatX(initial_eta*2*(1 - progress)))
 
-    # Optionally, you could now dump the network weights to a file like this:
+    # dump the network weights to a file:
     if dump:
         np.savez('models/{}_mnist_gen.npz'.format(gan),
                  *lasagne.layers.get_all_param_values(generator))
