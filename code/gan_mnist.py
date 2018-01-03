@@ -219,11 +219,7 @@ def plot_histogram(gan, fake_samples, real_samples, title, savepath):
     axes = axes.flatten()
     axes[0].hist(fake_flatten, bins=201, range=(-1.0, 1.0))
     axes[1].hist(real_flatten, bins=201, range=(-1.0, 1.0))
-    try:
-        axes[2].hist(fake_interval, bins=100, range=(t_min, t_max))
-    except:
-        import pdb
-        pdb.set_trace()
+    axes[2].hist(fake_interval, bins=100, range=(t_min, t_max))
     axes[3].hist(real_interval, bins=100, range=(t_min, t_max))
     axes[0].set_title('fake')
     axes[1].set_title('real')
