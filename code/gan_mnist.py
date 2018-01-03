@@ -11,8 +11,6 @@ from __future__ import print_function
 
 import sys
 import os
-import time
-
 from tqdm import tqdm
 import argparse
 
@@ -199,7 +197,7 @@ def get_critic_runs(gan, generator_updates):
 ##############################################################################
 # Define method for plotting fake images and histograms
 def plot_samples(gan, samples, savepath):
-    # we plot 42 of them
+    # plot 42 of them
     plt.imsave(savepath,
                (samples[:42].reshape(6, 7, 28, 28)
                             .transpose(0, 2, 1, 3)
@@ -209,19 +207,23 @@ def plot_samples(gan, samples, savepath):
 
 
 def plot_histogram(gan, fake_samples, real_samples, title, savepath):
-    # we compute histograms of pixel intensities
+    # compute histograms of pixel intensities
+    t_min, t_max = 0.02, 0.98
     fake_flatten = fake_samples.flatten()
     real_flatten = real_samples.flatten()
     fake_interval = fake_flatten[
-        np.array(fake_flatten > 0) | np.array(fake_flatten < 1)]
+        np.array(fake_flatten > t_min) & np.array(fake_flatten < t_max)]
     real_interval = real_flatten[
-        np.array(real_flatten > 0) | np.array(real_flatten < 1)]
-    t_min, t_max = 0.02, 0.98
+        np.array(real_flatten > t_min) & np.array(real_flatten < t_max)]
     fig, axes = plt.subplots(2, 2, figsize=(8, 4))
     axes = axes.flatten()
     axes[0].hist(fake_flatten, bins=201, range=(-1.0, 1.0))
     axes[1].hist(real_flatten, bins=201, range=(-1.0, 1.0))
-    axes[2].hist(fake_interval, bins=100, range=(t_min, t_max))
+    try:
+        axes[2].hist(fake_interval, bins=100, range=(t_min, t_max))
+    except:
+        import pdb
+        pdb.set_trace()
     axes[3].hist(real_interval, bins=100, range=(t_min, t_max))
     axes[0].set_title('fake')
     axes[1].set_title('real')
