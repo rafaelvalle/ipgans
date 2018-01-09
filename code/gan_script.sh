@@ -1,10 +1,10 @@
 #!/bin/bash -x
 
 # declare gans to be used
-declare -a gans=("dcgan") # gans=("dcgan" "lsgan" "wgan" "wgan-gp")
+declare -a gans=("dcgan" "lsgan" "wgan" "wgan-gp")
 declare -a thresholds=("0.5" "0.0")
 declare -a activations=("sigmoid" "scaled_tanh" "linear")
-declare -a optimizers=("adam" "rmsprop") # ("adam" "rmsprop")
+declare -a optimizers=("adam" "rmsprop")
 
 
 # loop over gans and run gans
