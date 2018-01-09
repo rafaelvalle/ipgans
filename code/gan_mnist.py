@@ -359,8 +359,7 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
         generator_scores = []
         for _ in range(epoch_size):
             for _ in range(get_critic_runs(gan, n_generator_updates)):
-                batch = next(batches)
-                inputs, targets = batch
+                inputs, targets = next(batches)
                 critic_scores.append(critic_train_fn(inputs))
             generator_scores.append(generator_train_fn())
             n_generator_updates += 1
