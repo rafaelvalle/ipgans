@@ -4,3 +4,4 @@
 *.npz
 *.gz
 .ropeproject*
+.DS_STORE
