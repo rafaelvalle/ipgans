@@ -234,7 +234,7 @@ def plot_histogram(gan, fake_samples, real_samples, title, savepath):
 
 # ############################## Main program ################################
 def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
-         initial_eta, eta_decay, threshold, activation, dump):
+         initial_eta, eta_decay, threshold, activation, noise_type, dump):
 
     # Load the dataset
     print("Loading data...")
@@ -248,7 +248,12 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
     # Instantiate a symbolic noise generator to use for training
     from theano.sandbox.rng_mrg import MRG_RandomStreams as RandomStreams
     srng = RandomStreams(seed=np.random.randint(2147462579, size=6))
-    noise = srng.normal((batch_size, 100), avg=0.5, std=0.1)
+    if noise_type == 'normal':
+        noise = srng.normal((batch_size, 100), avg=0.0, std=1)
+    elif noise_type == 'uniform':
+        noise = srng.uniform((batch_size, 100))
+    else:
+        raise Exception("Noise {} not supported".format(noise_type))
 
     # Prepare Theano variables for inputs and targets
     noise_var = T.matrix('noise')
@@ -391,7 +396,7 @@ if __name__ == '__main__':
                         help="Optimizer: adam, rmsprop")
     parser.add_argument("--do_batch_norm", action='store_true',
                         help="Use batch normalization on generator and critic")
-    parser.add_argument("--n_epochs", type=int, default=200,
+    parser.add_argument("--n_epochs", type=int, default=100,
                         help="Number of epochs")
     parser.add_argument("--epoch_size", type=int, default=100,
                         help="Epoch size")
@@ -401,6 +406,8 @@ if __name__ == '__main__':
                         help="Learning rate")
     parser.add_argument("--activation", type=str, default='sigmoid',
                         help="Activation function")
+    parser.add_argument("--noise_type", type=str, default='uniform',
+                        help="uniform or normal noise")
     parser.add_argument("--eta_decay", action='store_true',
                         help="Learning rate decay")
     parser.add_argument("--threshold", type=float, default=0, help="Dump model")
