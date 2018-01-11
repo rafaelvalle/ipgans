@@ -21,6 +21,7 @@ for gan in "${gans[@]}"; do
             ./gan_mnist.py "$gan" --optimizer $optimizer --do_batch_norm --threshold ${threshold} --activation $activation --noise_type $noise --eta_decay 
             ./gan_mnist.py "$gan" --optimizer $optimizer --do_batch_norm --threshold ${threshold} --activation $activation --noise_type $noise
           fi
+        done
       done
     done
   done
