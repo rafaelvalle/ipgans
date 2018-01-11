@@ -345,8 +345,8 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
                                   forever=True)
     # build preffix and suffix str for saving files
     prefix = "{}_mnist".format(gan)
-    suffix = "non_lin_{}_opt_{}_bn_{}_etadecay_{}_thresh_{}".format(
-        activation, optimizer, do_batch_norm, eta_decay, threshold)
+    suffix = "non_lin_{}_opt_{}_bn_{}_etadecay_{}_thresh_{}_noise_{}".format(
+        activation, optimizer, do_batch_norm, eta_decay, threshold, noise_type)
 
     # We iterate over epochs:
     n_generator_updates = 0
@@ -379,9 +379,9 @@ def main(gan, optimizer, do_batch_norm, n_epochs, epoch_size, batch_size,
 
     # dump the network weights to a file:
     if dump:
-        np.savez('models/{}_mnist_gen.npz'.format(gan),
+        np.savez('models/{}_mnist_gen_{}.npz'.format(gan, suffix),
                  *lasagne.layers.get_all_param_values(generator))
-        np.savez('models/{}_mnist_crit.npz'.format(gan),
+        np.savez('models/{}_mnist_crit_{}.npz'.format(gan, suffix),
                  *lasagne.layers.get_all_param_values(critic))
 
 
