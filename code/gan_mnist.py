@@ -396,7 +396,7 @@ if __name__ == '__main__':
                         help="Optimizer: adam, rmsprop")
     parser.add_argument("--do_batch_norm", action='store_true',
                         help="Use batch normalization on generator and critic")
-    parser.add_argument("--n_epochs", type=int, default=100,
+    parser.add_argument("--n_epochs", type=int, default=200,
                         help="Number of epochs")
     parser.add_argument("--epoch_size", type=int, default=100,
                         help="Epoch size")
